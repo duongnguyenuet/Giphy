@@ -3,4 +3,8 @@
 
     <string name="unknow_error">Error occurred while connecting. please try again later!</string>
     <string name="unknow_error_code">Error occurred while connecting. please try again later!\n[%s]</string>
+
+
+    <string name="facebook_app_id">835153229993809</string>
+    <string name="fb_login_protocol_scheme">fb835153229993809</string>
 </resources>

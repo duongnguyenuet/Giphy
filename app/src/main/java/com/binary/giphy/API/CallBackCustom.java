@@ -34,7 +34,7 @@ public class CallBackCustom<T> implements Callback<T> {
             new    MaterialDialog.Builder(context).title("Error")
                     .content(String.format(context.getString(R.string.unknow_error_code),response.code()+""))
                     .build().show();
-            RLog.e("Error onRespone " + response.code());
+//            RLog.e("Error onRespone " + response.code());
         }
     }
 

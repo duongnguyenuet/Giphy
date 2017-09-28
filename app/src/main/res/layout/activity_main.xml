@@ -6,13 +6,16 @@
     android:layout_height="match_parent"
     tools:context="com.binary.giphy.ui.MainActivity">
 
-    <TextView
+    <Button
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="Hello World!"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintLeft_toLeftOf="parent"
-        app:layout_constraintRight_toRightOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
+        android:text="Sigin With Google"
+        android:id="@+id/btn_google"/>
+    <Button
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Sigin With face"
+        android:id="@+id/btn_face"
+        app:layout_constraintTop_toBottomOf="@+id/btn_google"/>
 
 </android.support.constraint.ConstraintLayout>

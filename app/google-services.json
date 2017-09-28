@@ -1,0 +1,48 @@
+{
+  "project_info": {
+    "project_number": "116730461173",
+    "project_id": "firebase-giphy"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:116730461173:android:fc328288ba0aaf45",
+        "android_client_info": {
+          "package_name": "com.binary.giphy"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "116730461173-0dpi57tkgfak2vmhbbqgt2t202n6ca2t.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.binary.giphy",
+            "certificate_hash": "a8862bdfd7be379888e72eec8be0a1046534dff1"
+          }
+        },
+        {
+          "client_id": "116730461173-oks5l32j6udfojejrnsrl81es5oi3gl5.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyBJT4YQhW8MRhplZyw61-Kv0r4qT-gd2yE"
+        }
+      ],
+      "services": {
+        "analytics_service": {
+          "status": 1
+        },
+        "appinvite_service": {
+          "status": 1,
+          "other_platform_oauth_client": []
+        },
+        "ads_service": {
+          "status": 1
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
