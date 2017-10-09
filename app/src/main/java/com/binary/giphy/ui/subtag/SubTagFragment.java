@@ -41,9 +41,6 @@ public class SubTagFragment extends Fragment implements SubTagView {
     private SubTagAdapter adapter;
     private MainActivity activity;
 
-//    @Inject
-//    SubTagPresenter<SubTagView> subTagPresenter;
-
     @BindView(R.id.rv_sub_tag)
     RecyclerView rv_sub_tag;
 
@@ -66,14 +63,14 @@ public class SubTagFragment extends Fragment implements SubTagView {
         ButterKnife.bind(this,view);
         activity = (MainActivity) getActivity();
 
-//        initPresenter();
+        MyApplication application = (MyApplication) getActivity().getApplication();
+        application.getAppComponent().inject(this);
         init(getArguments().getString(INTENT_TAG));
-//        subTagPresenter.getData(getArguments().getString(INTENT_TAG));
         return view;
     }
 
     private void init(String tag){
-        Call<ApiResponse<List<Data>>> call = NetModule.getClient().create(GiphyAPI.class).getSearchByKeyResult(tag, Constants.API_KEY, 25, 0, "y", "en", "json");
+        Call<ApiResponse<List<Data>>> call = NetModule.getClient().create(GiphyAPI.class).getSearchByKeyResult(Constants.API_KEY, tag, 25, 0, "y", "en", "json");
         call.enqueue(new CallBackCustom<ApiResponse<List<Data>>>(getContext(), new OnResponse<ApiResponse<List<Data>>>() {
             @Override
             public void onResponse(ApiResponse<List<Data>> response) {
@@ -87,11 +84,6 @@ public class SubTagFragment extends Fragment implements SubTagView {
         }));
     }
 
-//    private void initPresenter(){
-//        MyApplication application = (MyApplication) getActivity().getApplication();
-//        application.getAppComponent().inject(this);
-//        subTagPresenter.attachView(this);
-//    }
     @Override
     public void showProgress(ProgressDialog progressDialog) {
 
