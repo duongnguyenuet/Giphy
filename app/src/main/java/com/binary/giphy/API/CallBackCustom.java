@@ -5,6 +5,7 @@ import android.content.Context;
 import com.afollestad.materialdialogs.MaterialDialog;
 import com.binary.giphy.R;
 import com.binary.giphy.interfaces.OnResponse;
+import com.binary.giphy.utils.RLog;
 
 import retrofit2.Call;
 import retrofit2.Callback;
@@ -18,9 +19,9 @@ public class CallBackCustom<T> implements Callback<T> {
     OnResponse<T> t;
     Context context;
 
-    public CallBackCustom(OnResponse<T> t, Context context) {
-        this.t = t;
+    public CallBackCustom(Context context, OnResponse<T> t) {
         this.context = context;
+        this.t = t;
     }
 
     @Override

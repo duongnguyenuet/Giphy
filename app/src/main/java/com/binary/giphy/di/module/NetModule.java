@@ -19,12 +19,6 @@ import retrofit2.converter.gson.GsonConverterFactory;
 public class NetModule {
     public static Retrofit retrofit = null;
 
-    static OkHttpClient okHttpClient = new OkHttpClient().newBuilder()
-            .connectTimeout(20, TimeUnit.SECONDS)
-            .readTimeout(20, TimeUnit.SECONDS)
-            .writeTimeout(20, TimeUnit.SECONDS)
-            .build();
-
     @Provides
     @Singleton
     public static Retrofit getClient(){
