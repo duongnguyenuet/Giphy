@@ -24,6 +24,10 @@ public class CallBackCustom<T> implements Callback<T> {
         this.t = t;
     }
 
+    public CallBackCustom(OnResponse<T> t) {
+        this.t = t;
+    }
+
     @Override
     public void onResponse(Call<T> call, Response<T> response) {
         if (response.isSuccessful()) {

@@ -2,6 +2,7 @@ package com.binary.giphy.ui.subtag;
 
 
 import android.app.ProgressDialog;
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.support.v7.widget.RecyclerView;
@@ -21,22 +22,22 @@ import com.binary.giphy.di.module.NetModule;
 import com.binary.giphy.interfaces.OnResponse;
 import com.binary.giphy.models.searchdetail.Data;
 import com.binary.giphy.ui.MainActivity;
+import com.binary.giphy.ui.gifview.GifViewActivity;
 import com.binary.giphy.utils.Constants;
 
 import java.util.List;
 
-import javax.inject.Inject;
-
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import retrofit2.Call;
-import retrofit2.Retrofit;
 
 /**
  * A simple {@link Fragment} subclass.
  */
-public class SubTagFragment extends Fragment implements SubTagView {
+public class SubTagFragment extends Fragment implements SubTagMvpView {
     public static final String INTENT_TAG = "tag";
+    public static final String INTENT_VIEW = "view";
+
     private List<Data> dataList;
     private SubTagAdapter adapter;
     private MainActivity activity;
@@ -73,12 +74,34 @@ public class SubTagFragment extends Fragment implements SubTagView {
         Call<ApiResponse<List<Data>>> call = NetModule.getClient().create(GiphyAPI.class).getSearchByKeyResult(Constants.API_KEY, tag, 25, 0, "y", "en", "json");
         call.enqueue(new CallBackCustom<ApiResponse<List<Data>>>(getContext(), new OnResponse<ApiResponse<List<Data>>>() {
             @Override
-            public void onResponse(ApiResponse<List<Data>> response) {
+            public void onResponse(final ApiResponse<List<Data>> response) {
                 if(response.getMeta().getStatus() == ApiConstants.CODE_SUCESS){
-                    rv_sub_tag.setLayoutManager(new StaggeredGridLayoutManager(2, StaggeredGridLayoutManager.VERTICAL));
+                    final StaggeredGridLayoutManager manager = new StaggeredGridLayoutManager(2, StaggeredGridLayoutManager.VERTICAL);
+                    rv_sub_tag.addOnScrollListener(new RecyclerView.OnScrollListener() {
+                        @Override
+                        public void onScrolled(RecyclerView recyclerView, int dx, int dy) {
+                            super.onScrolled(recyclerView, dx, dy);
+                            manager.invalidateSpanAssignments();
+                            manager.setGapStrategy(StaggeredGridLayoutManager.GAP_HANDLING_MOVE_ITEMS_BETWEEN_SPANS);
+                        }
+                    });
+                    rv_sub_tag.setLayoutManager(manager);
+                    int position = 2;
                     adapter = new SubTagAdapter(activity, response.getData());
+                    Log.e("Link 1", response.getData().get(position).getBitlyGifUrl());
+                    Log.e("Link 2", response.getData().get(position).getBitlyUrl());
+                    Log.e("Link 3", response.getData().get(position).getContentUrl());
+                    Log.e("Link 4", response.getData().get(position).getUrl());
                     rv_sub_tag.setAdapter(adapter);
                     rv_sub_tag.setHasFixedSize(true);
+                    adapter.setOnItemClickListener(new SubTagAdapter.OnItemClickListener() {
+                        @Override
+                        public void onItemClick(View itemView, int position) {
+                            Intent intent = new Intent(getActivity(), GifViewActivity.class);
+                            intent.putExtra(INTENT_VIEW, response.getData().get(position).getImages().getFixedHeight().getUrl());
+                            startActivity(intent);
+                        }
+                    });
                 }
             }
         }));

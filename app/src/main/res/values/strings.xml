@@ -1,5 +1,5 @@
 <resources>
-    <string name="app_name">Giphy</string>
+    <string name="app_name">GIPHY</string>
 
     <string name="unknow_error">Error occurred while connecting. please try again later!</string>
     <string name="unknow_error_code">Error occurred while connecting. please try again later!\n[%s]</string>
@@ -7,4 +7,16 @@
     <!-- TODO: Remove or change this placeholder text -->
     <string name="hello_blank_fragment">Hello blank fragment</string>
     <string name="tab_one">ADJECTIVES</string>
+
+    <string name="hint_username">USERNAME</string>
+    <string name="hint_password">PASSWORD</string>
+    <string name="btn_login">LOGIN</string>
+    <string name="btn_forget">Forget your password ?</string>
+    <string name="btn_reg">Register</string>
+    <string name="btn_reset">RESET PASSWORD</string>
+    <string name="btn_back">Back</string>
+    <string name="password_length">Password must be longer than 6 characters</string>
+    <string name="auth_failed">Login failed, check your username or password and try again</string>
+    
+    <string name="facebook_app_id">860444224123355</string>
 </resources>

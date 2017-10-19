@@ -23,10 +23,6 @@ public class MainAdapter extends FragmentPagerAdapter{
         this.context = context;
         this.fragments = fragments;
         this.categories = categories;
-
-        Log.e("csh", String.valueOf(categories.size()));
-        Log.e("csh", String.valueOf(fragments.size()));
-
     }
 
     @Override

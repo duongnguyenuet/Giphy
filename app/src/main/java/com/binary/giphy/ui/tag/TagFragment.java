@@ -52,7 +52,6 @@ public class TagFragment extends Fragment implements TagView {
         bundle.putString(ARG_CATE_NAME, category.getName());
         bundle.putStringArrayList(ARG_CATE_SUB, (ArrayList<String>) category.getSub());
         tagFragment.setArguments(bundle);
-        Log.e("csh", String.valueOf(category.getSub()));
         return tagFragment;
     }
 

@@ -4,7 +4,7 @@ package com.binary.giphy.base;
  * Created by duong on 9/20/2017.
  */
 
-public class BasePresenter<V extends View> implements Presenter<V> {
+public class BasePresenter<V extends MvpView> implements MvpPresenter<V> {
     private  V mMvpView;
 
     @Override

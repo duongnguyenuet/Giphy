@@ -1,6 +1,8 @@
 package com.binary.giphy.ui.subtag;
 
 import android.content.Context;
+import android.graphics.Color;
+import android.graphics.drawable.ColorDrawable;
 import android.support.v7.widget.RecyclerView;
 import android.util.Log;
 import android.view.LayoutInflater;
@@ -14,6 +16,9 @@ import com.bumptech.glide.Glide;
 import com.bumptech.glide.load.engine.DiskCacheStrategy;
 
 import java.util.List;
+import java.util.Random;
+
+import pl.droidsonroids.gif.GifImageView;
 
 /**
  * Created by duong on 10/3/2017.
@@ -23,11 +28,18 @@ public class SubTagAdapter extends RecyclerView.Adapter<SubTagAdapter.SubTagView
     private Context context;
     private List<Data> datas;
     private OnItemClickListener listener;
+    private ColorDrawable[] vibrantLightColorList =
+            {
+                    new ColorDrawable(Color.parseColor("#9ACCCD")), new ColorDrawable(Color.parseColor("#8FD8A0")),
+                    new ColorDrawable(Color.parseColor("#CBD890")), new ColorDrawable(Color.parseColor("#DACC8F")),
+                    new ColorDrawable(Color.parseColor("#D9A790")), new ColorDrawable(Color.parseColor("#D18FD9")),
+                    new ColorDrawable(Color.parseColor("#FF6772")), new ColorDrawable(Color.parseColor("#DDFB5C"))
+            };
 
     public SubTagAdapter(Context context, List<Data> datas) {
         this.context = context;
         this.datas = datas;
-        Log.e("Size", String.valueOf(datas.size()));
+        Log.e("data", String.valueOf(datas));
     }
 
 
@@ -36,7 +48,6 @@ public class SubTagAdapter extends RecyclerView.Adapter<SubTagAdapter.SubTagView
         context = parent.getContext();
         LayoutInflater inflater = LayoutInflater.from(context);
         View view = inflater.inflate(R.layout.item_sub_tag, parent, false);
-        Log.e("attached","duongnm");
         return new SubTagViewHolder(view);
     }
 
@@ -46,6 +57,9 @@ public class SubTagAdapter extends RecyclerView.Adapter<SubTagAdapter.SubTagView
         Glide.with(context)
                 .load(data.getImages().getFixedHeight().getUrl())
                 .asGif()
+                .placeholder(getRandomDrawbleColor())
+                .error(getRandomDrawbleColor())
+                .crossFade()
                 .fitCenter()
                 .diskCacheStrategy(DiskCacheStrategy.SOURCE)
                 .into(holder.imageView);
@@ -71,11 +85,11 @@ public class SubTagAdapter extends RecyclerView.Adapter<SubTagAdapter.SubTagView
     }
 
     public class SubTagViewHolder extends RecyclerView.ViewHolder {
-        ImageView imageView;
+        public GifImageView imageView;
 
         public SubTagViewHolder(final View itemView) {
             super(itemView);
-            imageView = (ImageView) itemView.findViewById(R.id.img_sub);
+            imageView = (GifImageView) itemView.findViewById(R.id.img_sub);
             itemView.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View view) {
@@ -85,5 +99,10 @@ public class SubTagAdapter extends RecyclerView.Adapter<SubTagAdapter.SubTagView
                 }
             });
         }
+    }
+
+    public ColorDrawable getRandomDrawbleColor() {
+        int idx = new Random().nextInt(vibrantLightColorList.length);
+        return vibrantLightColorList[idx];
     }
 }

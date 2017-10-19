@@ -4,6 +4,7 @@
   <dimen name="activity_margin_8">8dp</dimen>
   <dimen name="recycler_padding">3dp</dimen>
 
+
   <dimen name="text_size_medium">18sp</dimen>
   <dimen name="text_size_micro">12sp</dimen>
   <dimen name="text_size_normal">16sp</dimen>
@@ -13,4 +14,7 @@
   <dimen name="view_padding">4dp</dimen>
   <dimen name="view_padding10">10dp</dimen>
   <dimen name="view_margin_item">2dp</dimen>
+
+  <dimen name="fab_margin">16dp</dimen>
+  <dimen name="logo_w_h">84dp</dimen>
 </resources>
