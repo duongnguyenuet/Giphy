@@ -11,6 +11,6 @@ import com.binary.giphy.base.MvpView;
  */
 
 public interface GifViewMvpPresenter<V extends MvpView> extends MvpPresenter<V> {
-    void getGif(Context context, Uri uri);
+    void getGif(Context context, String url);
 }
 
