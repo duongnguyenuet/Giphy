@@ -39,5 +39,4 @@ public interface AppComponent {
     void inject(SharedGifActivity sharedGifActivity);
 
     void inject(GifViewActivity activity);
-
 }

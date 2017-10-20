@@ -9,6 +9,7 @@ import android.provider.MediaStore;
 import android.support.annotation.NonNull;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.support.v7.widget.RecyclerView;
 import android.view.View;
 import android.view.Window;
 import android.view.WindowManager;
@@ -19,6 +20,7 @@ import android.widget.Toast;
 import com.binary.giphy.R;
 import com.binary.giphy.base.BaseActivity;
 import com.binary.giphy.models.GifUpload;
+import com.binary.giphy.ui.gifview.RelatedGifAdapter;
 import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.firebase.database.DatabaseReference;
@@ -58,7 +60,6 @@ public class GifUploadActivity extends BaseActivity implements GifUploadMvpView 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-
         requestWindowFeature(Window.FEATURE_NO_TITLE);
         setContentView(R.layout.activity_gif_upload);
         getAppComponent().inject(this);
@@ -77,7 +78,7 @@ public class GifUploadActivity extends BaseActivity implements GifUploadMvpView 
         btnUpload.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                uploadImage(v);
+                mPresenter.uploadGif(GifUploadActivity.this, mDatabaseRef, mStorageRef, imgUri);
             }
         });
     }
@@ -102,49 +103,6 @@ public class GifUploadActivity extends BaseActivity implements GifUploadMvpView 
             } catch (IOException e) {
                 e.printStackTrace();
             }
-        }
-    }
-
-    public String getImageExt(Uri uri){
-        ContentResolver contentResolver = getContentResolver();
-        MimeTypeMap mimeTypeMap = MimeTypeMap.getSingleton();
-        return mimeTypeMap.getExtensionFromMimeType(contentResolver.getType(uri));
-    }
-
-    public void uploadImage(View v){
-        if(imgUri != null){
-            final ProgressDialog dialog = new ProgressDialog(this);
-            dialog.setTitle("Uploading");
-            dialog.show();
-
-            StorageReference reference = mStorageRef.child(FB_STORAGE_PATH + System.currentTimeMillis() + "." + getImageExt(imgUri));
-            reference.putFile(imgUri)
-                    .addOnSuccessListener(new OnSuccessListener<UploadTask.TaskSnapshot>() {
-                        @Override
-                        public void onSuccess(UploadTask.TaskSnapshot taskSnapshot) {
-                            dialog.dismiss();
-                            Toast.makeText(getApplication(), "Uploaded", Toast.LENGTH_SHORT).show();
-                            GifUpload gifUpload = new GifUpload(taskSnapshot.getDownloadUrl().toString());
-                            String uploadId = mDatabaseRef.push().getKey();
-                            mDatabaseRef.child(uploadId).setValue(gifUpload);
-                        }
-                    })
-                    .addOnFailureListener(new OnFailureListener() {
-                        @Override
-                        public void onFailure(@NonNull Exception e) {
-                            dialog.dismiss();
-                            Toast.makeText(getApplication(), e.getMessage(), Toast.LENGTH_SHORT).show();
-                        }
-                    })
-                    .addOnProgressListener(new OnProgressListener<UploadTask.TaskSnapshot>() {
-                        @Override
-                        public void onProgress(UploadTask.TaskSnapshot taskSnapshot) {
-                            double progress = (100 * taskSnapshot.getBytesTransferred()) / taskSnapshot.getTotalByteCount();
-                            dialog.setMessage("Uploading" + (int)progress + "%");
-                        }
-                    });
-        } else {
-            Toast.makeText(getApplication(), "Please select your gif", Toast.LENGTH_SHORT).show();
         }
     }
 }

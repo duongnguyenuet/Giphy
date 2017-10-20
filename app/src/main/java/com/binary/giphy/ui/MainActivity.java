@@ -2,28 +2,22 @@ package com.binary.giphy.ui;
 
 import android.app.ProgressDialog;
 import android.content.Intent;
-import android.graphics.Bitmap;
+
 import android.graphics.Color;
-import android.net.Uri;
-import android.provider.MediaStore;
-import android.support.annotation.NonNull;
-import android.support.design.widget.TabLayout;
+
 import android.support.v4.app.Fragment;
 import android.support.v4.view.ViewPager;
-import android.support.v7.app.AppCompatActivity;
+
 import android.os.Bundle;
-import android.support.v7.widget.Toolbar;
-import android.util.Log;
-import android.view.LayoutInflater;
 import android.view.View;
 import android.view.Window;
 import android.view.WindowManager;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
+
 import com.astuetz.PagerSlidingTabStrip;
-import com.binary.giphy.API.GiphyAPI;
-import com.binary.giphy.MyApplication;
+
 import com.binary.giphy.R;
 import com.binary.giphy.base.BaseActivity;
 import com.binary.giphy.models.Category;
@@ -33,15 +27,9 @@ import com.binary.giphy.ui.sharedgif.SharedGifActivity;
 import com.binary.giphy.ui.tag.TagFragment;
 import com.github.clans.fab.FloatingActionButton;
 import com.github.clans.fab.FloatingActionMenu;
-import com.google.firebase.auth.FirebaseAuth;
-import com.google.firebase.auth.FirebaseUser;
-import com.google.firebase.database.DatabaseReference;
-import com.google.firebase.database.FirebaseDatabase;
-import com.google.firebase.storage.FirebaseStorage;
-import com.google.firebase.storage.StorageReference;
 
-import java.io.FileNotFoundException;
-import java.io.IOException;
+import com.google.firebase.auth.FirebaseAuth;
+
 import java.util.ArrayList;
 import java.util.List;
 
@@ -51,6 +39,7 @@ import butterknife.BindView;
 import butterknife.ButterKnife;
 
 public class MainActivity extends BaseActivity implements MainView {
+
     @Inject
     MainPresenter<MainView> mMainPresenter;
     @BindView(R.id.tabs)

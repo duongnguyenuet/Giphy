@@ -5,7 +5,7 @@ android {
     buildToolsVersion "26.0.1"
     defaultConfig {
         applicationId "com.binary.giphy"
-        minSdkVersion 15
+        minSdkVersion 16
         targetSdkVersion 26
         versionCode 1
         versionName "1.0"
@@ -44,6 +44,7 @@ dependencies {
     compile 'com.google.firebase:firebase-database:9.2.1'
     compile 'com.facebook.android:facebook-android-sdk:4.5.0'
     compile 'com.github.clans:fab:1.6.4'
+    compile 'com.writingminds:FFmpegAndroid:0.3.2'
     testCompile 'junit:junit:4.12'
     annotationProcessor 'com.jakewharton:butterknife-compiler:8.8.1'
     annotationProcessor 'com.google.dagger:dagger-compiler:2.9'

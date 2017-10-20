@@ -37,6 +37,8 @@ import retrofit2.Call;
 public class SubTagFragment extends Fragment implements SubTagMvpView {
     public static final String INTENT_TAG = "tag";
     public static final String INTENT_VIEW = "view";
+    public static final String TAG_NAME = "tag";
+    public static final String SUBTAG_NAME  = "name";
 
     private List<Data> dataList;
     private SubTagAdapter adapter;
@@ -88,10 +90,6 @@ public class SubTagFragment extends Fragment implements SubTagMvpView {
                     rv_sub_tag.setLayoutManager(manager);
                     int position = 2;
                     adapter = new SubTagAdapter(activity, response.getData());
-                    Log.e("Link 1", response.getData().get(position).getBitlyGifUrl());
-                    Log.e("Link 2", response.getData().get(position).getBitlyUrl());
-                    Log.e("Link 3", response.getData().get(position).getContentUrl());
-                    Log.e("Link 4", response.getData().get(position).getUrl());
                     rv_sub_tag.setAdapter(adapter);
                     rv_sub_tag.setHasFixedSize(true);
                     adapter.setOnItemClickListener(new SubTagAdapter.OnItemClickListener() {
@@ -99,6 +97,8 @@ public class SubTagFragment extends Fragment implements SubTagMvpView {
                         public void onItemClick(View itemView, int position) {
                             Intent intent = new Intent(getActivity(), GifViewActivity.class);
                             intent.putExtra(INTENT_VIEW, response.getData().get(position).getImages().getFixedHeight().getUrl());
+                            intent.putExtra(TAG_NAME, getArguments().getString(INTENT_TAG));
+                            intent.putExtra(SUBTAG_NAME, response.getData().get(position).getUsername());
                             startActivity(intent);
                         }
                     });

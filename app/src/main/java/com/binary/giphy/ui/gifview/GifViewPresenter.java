@@ -1,9 +1,15 @@
 package com.binary.giphy.ui.gifview;
 
+import android.app.Activity;
 import android.content.Context;
+import android.content.pm.PackageManager;
 import android.os.Environment;
+import android.support.v4.app.ActivityCompat;
+import android.support.v7.app.AppCompatActivity;
+import android.util.Log;
 import android.widget.Toast;
 
+import com.binary.giphy.Manifest;
 import com.binary.giphy.base.BasePresenter;
 import com.binary.giphy.base.MvpView;
 
@@ -31,9 +37,13 @@ public class GifViewPresenter<V extends MvpView>  extends BasePresenter<V> imple
     }
 
     @Override
-    public void getGif(final Context context, String url) {
+    public void getGif(final Activity activity, String url,String name) {
+        if(ActivityCompat.checkSelfPermission(activity, android.Manifest.permission.WRITE_EXTERNAL_STORAGE)!= PackageManager.PERMISSION_GRANTED){
+            ActivityCompat.requestPermissions(activity, new String[]{android.Manifest.permission.WRITE_EXTERNAL_STORAGE},1);
+        }
         String path = Environment.getExternalStorageDirectory().getPath()
-                + "/" + Environment.DIRECTORY_DCIM + "/";
+                + "/" + Environment.DIRECTORY_DCIM +"/"+name+".gif";
+        Log.e("path", path);
         getDownloadObservable(url, path)
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
@@ -41,9 +51,9 @@ public class GifViewPresenter<V extends MvpView>  extends BasePresenter<V> imple
                     @Override
                     public void accept(Boolean isSuccessful) throws Exception {
                         if (isSuccessful) {
-                            Toast.makeText(context, "Saved", Toast.LENGTH_SHORT).show();
+                            Toast.makeText(activity, "Saved", Toast.LENGTH_SHORT).show();
                         } else {
-                            Toast.makeText(context, "Failed", Toast.LENGTH_SHORT).show();
+                            Toast.makeText(activity, "Failed", Toast.LENGTH_SHORT).show();
                         }
                     }
                 });
@@ -55,6 +65,7 @@ public class GifViewPresenter<V extends MvpView>  extends BasePresenter<V> imple
             public Boolean call() {
                 try {
                     URL url = new URL(urlImage);
+                    Log.e("Link", String.valueOf(url));
                     URLConnection connection = url.openConnection();
                     InputStream inputStream = connection.getInputStream();
                     File file = new File(path);

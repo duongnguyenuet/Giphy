@@ -34,7 +34,6 @@ public class ResetActivity extends BaseActivity implements ResetMvpView {
     @BindView(R.id.btn_back)
     Button btnBack;
 
-    private FirebaseAuth auth;
     @Inject
     ResetPresenter<ResetMvpView> mPresenter;
 
@@ -56,7 +55,6 @@ public class ResetActivity extends BaseActivity implements ResetMvpView {
                 .diskCacheStrategy(DiskCacheStrategy.SOURCE)
                 .into(imgBackground);
 
-        auth = FirebaseAuth.getInstance();
         btnBack.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -67,21 +65,7 @@ public class ResetActivity extends BaseActivity implements ResetMvpView {
         btnReset.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                String email = username.getText().toString().trim();
-                if(TextUtils.isEmpty(email)){
-                    Toast.makeText(getApplication(),"Enter your username", Toast.LENGTH_LONG).show();
-                }
-                auth.sendPasswordResetEmail(email)
-                        .addOnCompleteListener(new OnCompleteListener<Void>() {
-                            @Override
-                            public void onComplete(@NonNull Task<Void> task) {
-                                if (task.isSuccessful()) {
-                                    Toast.makeText(ResetActivity.this, "We have sent you instructions to reset your password!", Toast.LENGTH_SHORT).show();
-                                } else {
-                                    Toast.makeText(ResetActivity.this, "Failed to send reset email!", Toast.LENGTH_SHORT).show();
-                                }
-                            }
-                        });
+                mPresenter.resetPassword(ResetActivity.this, username.getText().toString().trim());
             }
         });
     }

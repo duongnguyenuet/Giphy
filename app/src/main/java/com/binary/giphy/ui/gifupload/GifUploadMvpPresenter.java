@@ -13,4 +13,5 @@ import com.google.firebase.storage.StorageReference;
  */
 
 public interface GifUploadMvpPresenter<V extends MvpView> extends MvpPresenter<V> {
+    void uploadGif(Context context, DatabaseReference mDatabaseRef, StorageReference mStorageRef, Uri imgUri);
 }

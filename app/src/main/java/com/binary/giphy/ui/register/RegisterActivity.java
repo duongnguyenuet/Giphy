@@ -39,7 +39,6 @@ public class RegisterActivity extends BaseActivity implements RegisterMvpView {
     @BindView(R.id.btn_login)
     Button btnLogin;
 
-    private FirebaseAuth auth;
     @Inject
     RegisterPresenter<RegisterMvpView> mPresenter;
 
@@ -60,7 +59,7 @@ public class RegisterActivity extends BaseActivity implements RegisterMvpView {
                 .centerCrop()
                 .diskCacheStrategy(DiskCacheStrategy.SOURCE)
                 .into(gifImageView);
-        auth = FirebaseAuth.getInstance();
+     
         btnLogin.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -71,33 +70,7 @@ public class RegisterActivity extends BaseActivity implements RegisterMvpView {
         btnReg.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                String username = edtUsername.getText().toString().trim();
-                String password = edtPassword.getText().toString().trim();
-
-                if(TextUtils.isEmpty(username)){
-                    Toast.makeText(getApplicationContext(),"Enter your username", Toast.LENGTH_LONG).show();
-                }
-
-                if(TextUtils.isEmpty(password)){
-                    Toast.makeText(getApplicationContext(),"Enter your password", Toast.LENGTH_LONG).show();
-                }
-
-                if(password.length()<6){
-                    Toast.makeText(getApplicationContext(),R.string.password_length, Toast.LENGTH_LONG).show();
-                }
-
-                auth.createUserWithEmailAndPassword(username, password)
-                        .addOnCompleteListener(new OnCompleteListener<AuthResult>() {
-                            @Override
-                            public void onComplete(@NonNull Task<AuthResult> task) {
-                                if(!task.isSuccessful()){
-                                    Toast.makeText(RegisterActivity.this, "Register Failed", Toast.LENGTH_LONG).show();
-                                } else {
-                                    startActivity(new Intent(RegisterActivity.this, MainActivity.class));
-                                    finish();
-                                }
-                            }
-                        });
+                mPresenter.registerValidate(RegisterActivity.this, edtUsername.getText().toString(), edtPassword.getText().toString());
             }
         });
     }

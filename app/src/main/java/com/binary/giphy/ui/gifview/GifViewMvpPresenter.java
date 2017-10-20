@@ -1,5 +1,6 @@
 package com.binary.giphy.ui.gifview;
 
+import android.app.Activity;
 import android.content.Context;
 import android.net.Uri;
 
@@ -11,6 +12,6 @@ import com.binary.giphy.base.MvpView;
  */
 
 public interface GifViewMvpPresenter<V extends MvpView> extends MvpPresenter<V> {
-    void getGif(Context context, String url);
+    void getGif(Activity activity, String url, String name);
 }
 

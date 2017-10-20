@@ -61,8 +61,10 @@ public class LoginActivity extends BaseActivity implements LoginMvpView {
         mPresenter.attachView(this);
         ButterKnife.bind(this);
         this.getWindow().setFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN, WindowManager.LayoutParams.FLAG_FULLSCREEN);
+
         MyApplication application = (MyApplication) getApplication();
         application.getAppComponent();
+
         Glide.with(this)
                 .load(R.drawable.giphy)
                 .asGif()
@@ -70,8 +72,6 @@ public class LoginActivity extends BaseActivity implements LoginMvpView {
                 .centerCrop()
                 .diskCacheStrategy(DiskCacheStrategy.SOURCE)
                 .into(imgBackground);
-
-        auth = FirebaseAuth.getInstance();
 
         btnReg.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -90,33 +90,7 @@ public class LoginActivity extends BaseActivity implements LoginMvpView {
         btnLogin.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                String username = edtUsername.getText().toString();
-                final String password = edtPassword.getText().toString();
-
-                if (TextUtils.isEmpty(username)) {
-                    Toast.makeText(getApplicationContext(), "Enter your username", Toast.LENGTH_LONG).show();
-                }
-
-                if (TextUtils.isEmpty(password)) {
-                    Toast.makeText(getApplicationContext(), "Enter your password", Toast.LENGTH_LONG).show();
-                }
-
-                auth.signInWithEmailAndPassword(username, password)
-                        .addOnCompleteListener(LoginActivity.this, new OnCompleteListener<AuthResult>() {
-                            @Override
-                            public void onComplete(@NonNull Task<AuthResult> task) {
-                                if (!task.isSuccessful()) {
-                                    if (password.length() < 6) {
-                                        Toast.makeText(getApplicationContext(), R.string.password_length, Toast.LENGTH_LONG).show();
-                                    } else {
-                                        Toast.makeText(getApplicationContext(), R.string.auth_failed, Toast.LENGTH_LONG).show();
-                                    }
-                                } else {
-                                    startActivity(new Intent(LoginActivity.this, MainActivity.class));
-                                    finish();
-                                }
-                            }
-                        });
+                mPresenter.loginValidate(LoginActivity.this, edtUsername.getText().toString(), edtPassword.getText().toString());
             }
         });
     }

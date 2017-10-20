@@ -17,6 +17,6 @@
     <string name="btn_back">Back</string>
     <string name="password_length">Password must be longer than 6 characters</string>
     <string name="auth_failed">Login failed, check your username or password and try again</string>
-    
+
     <string name="facebook_app_id">860444224123355</string>
 </resources>
